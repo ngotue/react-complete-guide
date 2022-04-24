@@ -1,8 +1,11 @@
+import { useState } from "react";
 import "./App.css";
-import Expenses from "./components/Expenses";
+import Expenses from "./components/Expenses/Expenses";
+import ExpensesFilter from "./components/Expenses/ExpensesFilter";
+import NewExpense from "./components/NewExpense/NewExpense";
 
 function App() {
-  const expenses = [
+  const initExpenses = [
     {
       id: "e1",
       title: "Toilet Paper",
@@ -23,7 +26,20 @@ function App() {
       date: new Date(2021, 5, 12),
     },
   ];
-  return <Expenses expenses={expenses}></Expenses>;
+
+  const [expenses, setExpenses] = useState(initExpenses);
+
+  const saveExpenseHandler = (expense) => {
+    console.log("expense :", expense);
+    setExpenses((prevState) => initExpenses.push(expense));
+  };
+
+  return (
+    <div>
+      <NewExpense onSaveExpense={saveExpenseHandler} />
+      <Expenses expenses={expenses} />
+    </div>
+  );
 }
 
 export default App;
